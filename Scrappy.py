@@ -40,12 +40,3 @@ for element in lines[:]:
     houses_file2.write(element)
     houses_file2.write(", ")
 
-
-"""
- Last notes
-
-1. Ignore the data from line 483, so you can delete it.
-2. The numbers represent price,bedrooms,showers, garages and area in m2.
-3. After going through the docs throughly I've realized I could have done this more efficiently and with less lines, but am tired. Next time.
-
-"""
