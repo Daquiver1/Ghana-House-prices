@@ -2,7 +2,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-def get_details(source):
+def get_details(source, val):
     """
     A function to get the description, prices and room number of houses"
 
@@ -13,7 +13,7 @@ def get_details(source):
     """
 
     soup = BeautifulSoup(source, "lxml")
-    results = soup.find(id="listview")
+    results = soup.find(id=val)
     mqs_class = results.find_all(
         "div", class_=re.compile("row mqs-featured-prop-inner-wrap clickable ")
     )
