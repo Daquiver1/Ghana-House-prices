@@ -11,19 +11,22 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 s = Service(ChromeDriverManager().install())
 options = webdriver.ChromeOptions()
-# options.headless = true
+options.headless = true
 driver = webdriver.Chrome(service=s, options=options)
 
 URL = "https://meqasa.com/houses-for-sale-in-Accra.html?y=965793785&w=1"
 
-# Log in
+
 driver.get(URL)
-driver.find_element(By.ID, "redi-modal-close").click()
-print(driver.current_url)
-get_details(driver.current_url)
+next_button = driver.find_element(By.ID, "pagenumnext")
 
-# next_button = driver.find_element(By.ID, "pagenumnext")
-# # It's a js button, so need to use execute script
-# driver.execute_script("arguments[0].click();", next_button)
+for i in range(2):
+    driver.execute_script("arguments[0].click();", next_button)
+    value = f"pg{2+i}"
+    print(value)
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, value)))
 
+
+source1 = driver.execute_script("return document.body.innerHTML;")
+get_details(source1)
 
