@@ -24,15 +24,10 @@ for i in range(NUM):
     # get page source
     source1 = driver.execute_script("return document.body.innerHTML;")
     get_details(source1, value)
-    # A js button, so have to use execute script to click
+    # A js button, so use execute script to click
     driver.execute_script("arguments[0].click();", next_button)
     value = f"pg{2+i}"
     print(value)
     # wait until the next pg is displayed.
     WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, value)))
-
-
-# retrieve the current page source
-source1 = driver.execute_script("return document.body.innerHTML;")
-get_details(source1)
 

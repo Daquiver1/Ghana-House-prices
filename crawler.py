@@ -6,7 +6,7 @@ def get_details(source, val):
     """
     A function to get the description, prices and room number of houses"
 
-    arguments: The page source. Type = String
+    arguments: The html page source and the page id. Soure and Val are of String type
     output: A text file storing the description, prices and room num separated
     by a comma.
 
