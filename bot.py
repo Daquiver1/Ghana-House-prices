@@ -14,18 +14,22 @@ options.headless = true
 driver = webdriver.Chrome(service=s, options=options)
 
 URL = "https://meqasa.com/houses-for-sale-in-Accra.html?y=965793785&w=1"
-NUM = 200 # number of pages you want to crawl
+NUM = 16 # number of pages you want to crawl
 
 driver.get(URL)
 next_button = driver.find_element(By.ID, "pagenumnext")
 
+value = "pg1" # inital pg
 for i in range(NUM):
-    # click on the next button and wait for the pg to load
-    # it's a js button, so have to use execute_script
+    # get page source
+    source1 = driver.execute_script("return document.body.innerHTML;")
+    get_details(source1, value)
+    # A js button, so have to use execute script to click
     driver.execute_script("arguments[0].click();", next_button)
     value = f"pg{2+i}"
     print(value)
-    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, value)))
+    # wait until the next pg is displayed.
+    WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, value)))
 
 
 # retrieve the current page source
