@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+from crawler import get_details
 import requests
 import time
 
@@ -22,31 +23,13 @@ URL = "https://meqasa.com/houses-for-sale-in-Accra.html?y=965793785&w=1"
 
 # Log in
 driver.get(URL)
-parent = driver.current_window_handle
-driver.implicitly_wait(10)
 driver.find_element(By.ID, "redi-modal-close").click()
-
+get_details(driver.current_url)
 
 next_button = driver.find_element(By.ID, "pagenumnext")
+# It's a js button, so need to use execute script
 driver.execute_script("arguments[0].click();", next_button)
 
-
-
-def link_of_pasco():
-    """
-    A function to retrieve the links of all the past questions displayed.
-    output: A dictionary containing the index and the past question link.
-    """
-
-    page = requests.get(driver.current_url)
-
-    soup = BeautifulSoup(page.content, "lxml")
-    pasco1 = soup.find_all("a", class_="titleField")
-    links = {}
-    for i in range(1, len(pasco1) + 1):  # Starts from 1 not 0,
-        links[i] = "https://balme.ug.edu.gh" + pasco1[i - 1]["href"]
-
-    return links
 
 
 def download_pasco(links, choice):
@@ -77,5 +60,3 @@ def download_pasco(links, choice):
     return file
 
 
-if __name__ == "__main__":
-    pass
